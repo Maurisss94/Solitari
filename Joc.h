@@ -6,6 +6,7 @@
 #define PRACTICAFINAL_JOC_H
 
 #include "Tauler.h"
+#include "pilaCartes.h"
 
 class Joc {
 public:
@@ -15,11 +16,13 @@ public:
     //CONSULTORS
     void mostrar() const;
 
+    void obreCarta();
 
 private:
 
-    Baralla ma;
+
     Tauler tauler;
+    pilaCartes ma, descartades, coll1, coll2, coll3, coll4;;
 
 };
 

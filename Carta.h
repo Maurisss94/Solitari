@@ -14,6 +14,7 @@ public:
 
     void mostrar() const;
     void setVisible();
+    void setAmagada();
 
 
 

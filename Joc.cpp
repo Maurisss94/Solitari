@@ -7,14 +7,19 @@
 
 using namespace std;
 Joc::Joc(Baralla b) {
-    ma = b;
+    ma = pilaCartes();
     tauler = Tauler();
+    descartades = pilaCartes();
+    coll1 = pilaCartes();
+    coll2 = pilaCartes();
+    coll3 = pilaCartes();
+    coll4 = pilaCartes();
 
     int fila = 0;
     int cont2 = 0;
     int i = 0;
     for(i;i<tauler.getFiles();i++){
-        Carta nova = ma.agafaCarta();
+        Carta nova = b.agafaCarta();
         tauler.afageixCarta(nova, i, fila);
         if(i == tauler.getFiles()-1){
             fila++;
@@ -22,12 +27,26 @@ Joc::Joc(Baralla b) {
         }
     }
 
+    int cartesSobrants = b.getMida();
+    for(int i=0;i<=cartesSobrants;i++){
+        Carta sobrant = b.repartirSobrants(i);
+        ma.empila(sobrant);
+    }
+
+
 
 }
 void Joc::mostrar() const{
 
     cout << "ESTAT DEL JOC" << endl;
-
+    coll1.cim().mostrar();
+    coll2.cim().mostrar();
+    coll3.cim().mostrar();
+    coll4.cim().mostrar();
+    cout << "   ";
+    ma.cim().mostrar();
+    descartades.cim().mostrar();
+    cout << endl;
     for(int i=0;i<tauler.getFiles();i++){
         cout << "c" << i+1 << " ";
     }
@@ -40,13 +59,22 @@ void Joc::mostrar() const{
                 agafada.setVisible();
             }
             agafada.mostrar();
-            cout << " " ;
         }
         cout << "f" <<cont+1 <<  endl;
         i = 0;
         cont++;
 
-    }
 
+    }
+}
+void Joc::obreCarta() {
+    if(ma.esBuida()){
+        ma = descartades;
+        descartades = pilaCartes();
+    }else {
+        Carta agafada = ma.desempila();
+        agafada.setVisible();
+        descartades.empila(agafada);
+    }
 
 }

@@ -20,13 +20,16 @@ Carta::Carta(char p, char v) {
 void Carta::setVisible() {
     visible = true;
 }
+void Carta::setAmagada() {
+    visible = false;
+}
 void Carta::mostrar() const {
     if(visible){
-        cout << valor << pal ;
+        cout << valor << pal << " ";
     }else if((pal == ' ')or(valor==' ')){
-        cout << "  ";
+        cout << "   ";
     }else{
-        cout << "**";
+        cout << "**" << " ";
     }
 
 }

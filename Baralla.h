@@ -14,6 +14,8 @@ public:
 
     int getMida() const;
     Carta agafaCarta();
+    Carta repartirSobrants(int i);
+
 
 private:
     static void iniLlavor(int llavor);

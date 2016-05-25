@@ -43,6 +43,7 @@ Baralla::Baralla(int llavor, int passos) {
         llistaCartes[num1] = carta1;
         llistaCartes[num2] = carta2;
     }
+    a_n--;
 
 }
 
@@ -67,6 +68,11 @@ int Baralla::getMida() const {
     return a_n;
 }
 Carta Baralla::agafaCarta() {
+    Carta agafada = llistaCartes[a_n];
     a_n--;
-    return llistaCartes[a_n];
+    return agafada;
+}
+Carta Baralla::repartirSobrants(int i) {
+    Carta sobrant = llistaCartes[i];
+    return sobrant;
 }
