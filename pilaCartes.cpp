@@ -27,6 +27,7 @@ Carta pilaCartes::cim() const {
     }
     return a_cim->valor;
 }
+
 void pilaCartes::empila(Carta c) {
     Node* nou = new Node;
     nou->valor = c;

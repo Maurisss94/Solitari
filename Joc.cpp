@@ -51,9 +51,9 @@ void Joc::mostrar() const{
         cout << "c" << i+1 << " ";
     }
     cout << endl;
-    int max = 7, cont = 0, i=0;
-    while(cont < max){
-        for(i;i<max;i++){
+    int files = 7, cont = 0, i=0, columnes = 7;
+    while(cont < columnes){
+        for(i;i<files;i++){
             Carta agafada = tauler.getCarta(i,cont);
             if(i==cont){
                 agafada.setVisible();
@@ -77,4 +77,75 @@ void Joc::obreCarta() {
         descartades.empila(agafada);
     }
 
+}
+bool Joc::descartadesBuida() const {
+    return descartades.esBuida();
+}
+void Joc::posarAlTauler(int colum) {
+    if(colum != -1){
+        int ultimaFila = tauler.getColumna(colum);
+        Carta agafada = descartades.desempila();
+        Carta anterior = tauler.getCarta(colum-1, ultimaFila-1);
+        if(agafada.casen(anterior)){
+            tauler.afageixCarta(agafada, colum-1, ultimaFila);
+        }else{
+            cout << "LA CARTA NO ES POT POSAR A LA COLUMNA " << colum << endl;
+            descartades.empila(agafada);
+        }
+    }
+
+}
+void Joc::posarAlaPila() {
+
+    //REPASSAR , no pot ser que hi hagi tants ifs, fer una funcio amb el parametre de la carta.
+    Carta agafada = descartades.cim();
+
+    if(agafada.getPal() == 'c'){
+        if(coll2.esBuida() and agafada.getValor() == 'A'){
+            coll2.empila(descartades.desempila());
+        }else {
+            if(agafada.esMesPetita(coll2.cim())){
+                coll2.empila(descartades.desempila());
+            }else{
+                mostraError();
+            }
+        }
+    }
+    if(agafada.getPal() == 'P'){
+        if(coll1.esBuida() and agafada.getValor() == 'A'){
+            coll1.empila(descartades.desempila());
+        }else{
+            if(agafada.esMesPetita(coll1.cim())){
+                coll1.empila(descartades.desempila());
+            }else{
+                mostraError();
+            }
+        }
+    }
+    if(agafada.getPal() == 'd'){
+        if(coll3.esBuida() and agafada.getValor() == 'A'){
+            coll3.empila(descartades.desempila());
+        }else {
+            if(agafada.esMesPetita(coll3.cim())){
+                coll3.empila(descartades.desempila());
+            }else{
+                mostraError();
+            }
+        }
+    }
+    if(agafada.getPal() == 'T'){
+        if(coll4.esBuida() and agafada.getValor() == 'A'){
+            coll4.empila(descartades.desempila());
+        }else {
+            if(agafada.esMesPetita(coll4.cim())){
+                coll4.empila(descartades.desempila());
+            }else{
+                mostraError();
+            }
+        }
+    }
+
+}
+void Joc::mostraError() {
+    cout << "NO ES POT APILAR LA CARTA" << endl;
 }

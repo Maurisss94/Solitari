@@ -15,14 +15,20 @@ public:
 
     //CONSULTORS
     void mostrar() const;
+    bool descartadesBuida() const;
+
 
     void obreCarta();
+    void posarAlTauler(int colum);
+    void posarAlaPila();
 
 private:
 
 
     Tauler tauler;
-    pilaCartes ma, descartades, coll1, coll2, coll3, coll4;;
+    pilaCartes ma, descartades, coll1, coll2, coll3, coll4;
+
+    void mostraError();
 
 };
 

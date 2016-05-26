@@ -42,7 +42,7 @@ void Tauler::inicialitza() {
 
 }
 int Tauler::getColumna(int pos) const{
-    return a_mida[pos];
+    return a_mida[pos-1];
 }
 int Tauler::getFiles() const {
     return a_nf;

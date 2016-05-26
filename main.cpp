@@ -32,6 +32,16 @@ void seguentOpcio(int &opcio){
     cin >> opcio;
 
 }
+int demanaColumna(){
+    int c;
+    cout << "A QUINA COLUMNA LA VOLS POSAR:" << endl;
+    cin >> c;
+    if((c < 1) or (c >7)){
+        cout << "LA CARTA NO ES POT POSAR A LA COLUMNA " << c << endl;
+        return -1;
+    }
+    return c;
+}
 
 void gestionaOpcio(int opcio, Joc joc) {
     while(opcio != 0){
@@ -41,6 +51,29 @@ void gestionaOpcio(int opcio, Joc joc) {
             seguentOpcio(opcio);
         }
         if(opcio == 2){
+            if(joc.descartadesBuida()){
+                cout << "NO HI HA CAP CARTA PER AGAFAR" << endl;
+                joc.mostrar();
+                seguentOpcio(opcio);
+            }else{
+                int colum = demanaColumna();
+                joc.posarAlTauler(colum);
+                joc.mostrar();
+                seguentOpcio(opcio);
+            }
+        }
+        if(opcio == 3){
+            if(joc.descartadesBuida()){
+                cout << "NO HI HA CAP CARTA PER AGAFAR" << endl;
+                joc.mostrar();
+                seguentOpcio(opcio);
+            }else{
+                joc.posarAlaPila();
+                joc.mostrar();
+                seguentOpcio(opcio);
+            }
+        }
+        if(opcio == 4){
             joc.mostrar();
             seguentOpcio(opcio);
         }

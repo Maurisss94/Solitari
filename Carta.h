@@ -13,6 +13,11 @@ public:
     Carta(char p, char v);
 
     void mostrar() const;
+    bool casen(Carta anterior) const;
+    char getPal() const;
+    char getValor() const;
+    bool esMesPetita(Carta c) const;
+    bool esMesGran(Carta c) const;
     void setVisible();
     void setAmagada();
 
@@ -22,6 +27,7 @@ private:
     char pal;
     char valor;
     bool visible;
+    char color;
 };
 
 
