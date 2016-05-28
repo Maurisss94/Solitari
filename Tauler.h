@@ -10,19 +10,27 @@
 class Tauler {
 
 public:
-
+    //CONSTRUCTOR
     Tauler();
 
+    //MODIFICADORS
     void inicialitza();
     void afageixCarta(Carta nova, int i, int j);
     Carta extreuCarta(int i, int j);
     Carta extreuDarrera(int i);
     void afageixCartaFinal(Carta c, int i);
+    void substitueix(Carta c, int desti);
+
+    //CONSULTORS
     int getFiles() const;
     int getColumna(int pos) const;
     Carta getCarta(int i, int j) const;
     Carta getUltimaCartaVisible(int i) const;
-    void substitueix(Carta c, int desti);
+
+    //DESTRUCTOR, OPERADOR ASSIGNACIO, CONSTRUCTOR COPIA
+    //~Tauler();
+    //Tauler &operator= (const Tauler &elem);
+    //Tauler(const Tauler &elem);
 
 private:
     void allibera();

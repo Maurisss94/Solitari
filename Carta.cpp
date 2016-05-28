@@ -57,6 +57,8 @@ char Carta::getPal() const {
 char Carta::getValor() const {
     return valor;
 }
+//Pre: La carta c ha de tenir un valor valid.
+//Post: Aquest metode ens indica en quin ordre s'han de mantenir les cartes sobre el tauler, ordre descendent.
 bool Carta::esMesGran(Carta c) const {
     int diferencia = 0;
     int nou = valor - '0';
@@ -79,10 +81,15 @@ bool Carta::esMesGran(Carta c) const {
     if(c.valor == '2'){
         return valor == 'A';
     }
+    if(c.valor == '\0'){
+        return valor == 'K';
+    }
     diferencia = anterior -nou;
     return diferencia == 1;
 
 }
+//Pre: La carta c ha de tenir un valor valid.
+//Post: Aquest metode ens indica en quin ordre s'han de mantenir les cartes sobre el tauler, ordre ascendent, per les piles.
 bool Carta::esMesPetita(Carta c) const {
     int diferencia = 0;
     int nou = valor - '0';

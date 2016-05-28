@@ -27,8 +27,6 @@ public:
 
     pilaCartes& operator=(const pilaCartes& o);
 
-
-
 private:
 
     struct Node {

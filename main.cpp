@@ -53,9 +53,14 @@ int demanaColumnaDesti(){
     cin >> colum;
     return colum;
 }
-
+int demanaPila(){
+    int pila;
+    cout << "ENTRA LA PILA: " << endl;
+    cin >> pila;
+    return pila;
+}
 void gestionaOpcio(int opcio, Joc joc) {
-    while(opcio != 0){
+    while((opcio != 0) and !joc.haAcabat()){
         if (opcio == 1) {
             joc.obreCarta();
             joc.mostrar();
@@ -103,7 +108,27 @@ void gestionaOpcio(int opcio, Joc joc) {
             seguentOpcio(opcio);
 
         }
+        if(opcio == 6){
+            int pila = demanaPila();
+            if(joc.esPotRecuperar(pila)){
+                int columna = demanaColumna();
+                joc.recuperaCarta(pila, columna);
+            }else{
+                cout << "A LA PILA NO HI HA CAP CARTA PER RECUPERAR" << endl;
+            }
+            joc.mostrar();
+            seguentOpcio(opcio);
+        }
+        if(opcio == 9){
+            mostrarMenu(opcio);
+        }
     }
+    if(joc.haAcabat()){
+        cout << "PARTIDA GUANYADA" << endl;
+    }else{
+        cout << "PARTIDA ABANDONADA" << endl;
+    }
+
 
 }
 int main() {

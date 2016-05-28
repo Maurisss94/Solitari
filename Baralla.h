@@ -20,14 +20,14 @@ public:
 private:
     static void iniLlavor(int llavor);
     static int aleatori(int max);
+    void intercanvi(int passos);
 
-    // FALTEN ELS ATRIBUTS NORMALS
     Carta llistaCartes[N];
     int a_n;
-    int pas;
 
     // atribut de classe
     static unsigned a_llavor;
+
 };
 
 #endif // BARRALLA_H

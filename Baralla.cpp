@@ -17,7 +17,6 @@ Baralla::Baralla() {
 Baralla::Baralla(int llavor, int passos) {
 
     iniLlavor(llavor);
-    pas = passos;
     char pal [] = {'P','c','d', 'T'};
     char valor [] = {'A', '2', '3', '4', '5', '6', '7', '8', '9', 'D', 'J', 'Q', 'K'};
     a_n = 0;
@@ -29,6 +28,11 @@ Baralla::Baralla(int llavor, int passos) {
             a_n++;
         }
     }
+    intercanvi(passos);
+
+
+}
+void Baralla::intercanvi(int passos) {
     Carta aux;
     for(int i=0;i<passos;i++){
         int num1 =aleatori(a_n);
@@ -44,13 +48,10 @@ Baralla::Baralla(int llavor, int passos) {
         llistaCartes[num2] = carta2;
     }
     a_n--;
-
 }
-
 
 void Baralla::iniLlavor(int llavor)
 {
-// metode de classe
     a_llavor = abs(llavor);
     if (a_llavor == 0)
         a_llavor++;

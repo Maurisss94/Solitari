@@ -17,7 +17,7 @@ Joc::Joc(Baralla b) {
 
     int fila = 0;
     int cont2 = 0;
-    int i = 0, cont=0;
+    int i = 0;
     for(i;i<tauler.getFiles();i++){
         Carta nova = b.agafaCarta();
         if(i==cont2){
@@ -89,8 +89,7 @@ void Joc::posarAlTauler(int colum) {
         int ultimaFila = tauler.getColumna(colum-1);
         Carta agafada = descartades.desempila();
         Carta anterior = tauler.getCarta(colum-1, ultimaFila-1);
-        if(agafada.esMesGran(anterior)){
-            //ultimaFila++;
+        if(agafada.casen(anterior)){
             tauler.afageixCarta(agafada, colum-1, ultimaFila);
         }else{
             cout << "LA CARTA NO ES POT POSAR A LA COLUMNA " << colum << endl;
@@ -148,7 +147,6 @@ void Joc::posarAlaPila() {
             }
         }
     }
-
 }
 void Joc::mostraError() {
     cout << "NO ES POT APILAR LA CARTA" << endl;
@@ -159,7 +157,6 @@ bool Joc::comprovaSituacio(int colum, int fila) const{
     }else{
         return true;
     }
-
 }
 void Joc::mouCarta(int colum, int fila, int desti) {
     colum = colum -1;
@@ -168,11 +165,12 @@ void Joc::mouCarta(int colum, int fila, int desti) {
     Carta cartaMoure = tauler.getCarta(colum, fila);
     Carta ultimaVisible = tauler.getUltimaCartaVisible(desti);
     if(cartaMoure.casen(ultimaVisible)){
-        int max = tauler.getColumna(fila);
+        int max = tauler.getColumna(colum);
         for(int i=0;i<max;i++){
             if(tauler.getCarta(colum, i).getVisible() and tauler.getCarta(colum, i).casen(ultimaVisible)){
                 Carta extreta = tauler.extreuCarta(colum, i);
                 tauler.afageixCartaFinal(extreta, desti);
+                ultimaVisible = extreta;
             }
         }
         girarUltima(colum);
@@ -180,12 +178,11 @@ void Joc::mouCarta(int colum, int fila, int desti) {
     }else{
         cout << "LA CARTA NO ES POT POSAR A LA COLUMNA " << desti+1 << endl;
     }
-
 }
 void Joc::mouCartaPila(int desti) {
     int aux = desti -1;
     int cont = 0;
-    if(!(desti < 0 or desti > 6) or tauler.getColumna(desti) != 0){
+    if(!(aux < 0 or aux > 6) or tauler.getColumna(aux) != 0){
         Carta darrera = tauler.getUltimaCartaVisible(aux);
         if(primeraInsercio(darrera, aux, cont)){
             girarUltima(aux);
@@ -260,7 +257,49 @@ void Joc::girarUltima(int desti) {
     if(!ultima.getVisible()){
         ultima.setVisible();
         tauler.substitueix(ultima, desti);
-
     }
+}
+bool Joc::esPotRecuperar(int pila) const{
+    bool final = false;
+    if(pila > 0 or pila < 5){
+        if(((pila == 1) and !coll1.esBuida()) or (pila == 2 and !coll2.esBuida()) or (pila == 3 and !coll3.esBuida()) or (pila == 4 and !coll4.esBuida())){
+            final = true;
+        }
+    }
+    return final;
+}
+void Joc::recuperaCarta(int pila, int columna) {
 
+    int aux = columna -1;
+    Carta ultima = tauler.getUltimaCartaVisible(columna-1);
+    if(pila == 1){
+        if(coll1.cim().casen(ultima)){
+            tauler.afageixCartaFinal(coll1.desempila(), aux);
+        }else{
+            cout << "LA CARTA NO ES POT POSAR A LA COLUMNA " << columna << endl;
+        }
+    }if(pila == 2){
+        if(coll2.cim().casen(ultima)){
+            tauler.afageixCartaFinal(coll2.desempila(), aux);
+        }else{
+            cout << "LA CARTA NO ES POT POSAR A LA COLUMNA " << columna << endl;
+        }
+    }
+    if(pila == 3){
+        if(coll3.cim().casen(ultima)){
+            tauler.afageixCartaFinal(coll3.desempila(), aux);
+        }else{
+            cout << "LA CARTA NO ES POT POSAR A LA COLUMNA " << columna << endl;
+        }
+    }
+    if(pila == 4){
+        if(coll4.cim().casen(ultima)){
+            tauler.afageixCartaFinal(coll4.desempila(), aux);
+        }else{
+            cout << "LA CARTA NO ES POT POSAR A LA COLUMNA " << columna << endl;
+        }
+    }
+}
+bool Joc::haAcabat() const {
+    return coll1.cim().getValor() == 'K' and coll2.cim().getValor() == 'K' and coll3.cim().getValor() == 'K' and coll4.cim().getValor() == 'K';
 }

@@ -23,10 +23,12 @@ public:
     void posarAlaPila();
     void mouCarta(int colum, int fila, int desti);
     void mouCartaPila(int desti);
+    void recuperaCarta(int pila, int columna);
+    bool esPotRecuperar(int pila) const;
+    bool haAcabat() const;
 
 
 private:
-
 
     Tauler tauler;
     pilaCartes ma, descartades, coll1, coll2, coll3, coll4;
