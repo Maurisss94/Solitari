@@ -42,6 +42,17 @@ int demanaColumna(){
     }
     return c;
 }
+void demanaOrigen(int &columna, int &fila){
+    cout << "ENTRA LA COLUMNA ORIGEN I LA FILA ORIGEN:" << endl;
+    cin >> columna;
+    cin >> fila;
+}
+int demanaColumnaDesti(){
+    int colum;
+    cout << "ENTRA LA COLUMNA DESTI:" << endl;
+    cin >> colum;
+    return colum;
+}
 
 void gestionaOpcio(int opcio, Joc joc) {
     while(opcio != 0){
@@ -74,8 +85,23 @@ void gestionaOpcio(int opcio, Joc joc) {
             }
         }
         if(opcio == 4){
+            int colum, fila;
+            demanaOrigen(colum, fila);
+            if(joc.comprovaSituacio(colum, fila)){
+                int desti = demanaColumnaDesti();
+                joc.mouCarta(colum, fila, desti);
+            }else{
+                cout << "LA CARTA NO ES POT MOURE" << endl;
+            }
             joc.mostrar();
             seguentOpcio(opcio);
+        }
+        if(opcio == 5){
+            int desti = demanaColumnaDesti();
+            joc.mouCartaPila(desti);
+            joc.mostrar();
+            seguentOpcio(opcio);
+
         }
     }
 

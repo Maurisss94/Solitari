@@ -15,9 +15,14 @@ public:
 
     void inicialitza();
     void afageixCarta(Carta nova, int i, int j);
+    Carta extreuCarta(int i, int j);
+    Carta extreuDarrera(int i);
+    void afageixCartaFinal(Carta c, int i);
     int getFiles() const;
     int getColumna(int pos) const;
     Carta getCarta(int i, int j) const;
+    Carta getUltimaCartaVisible(int i) const;
+    void substitueix(Carta c, int desti);
 
 private:
     void allibera();

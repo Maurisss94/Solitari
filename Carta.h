@@ -18,6 +18,8 @@ public:
     char getValor() const;
     bool esMesPetita(Carta c) const;
     bool esMesGran(Carta c) const;
+    bool getVisible() const;
+
     void setVisible();
     void setAmagada();
 

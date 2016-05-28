@@ -42,14 +42,47 @@ void Tauler::inicialitza() {
 
 }
 int Tauler::getColumna(int pos) const{
-    return a_mida[pos-1];
+    return a_mida[pos];
 }
 int Tauler::getFiles() const {
     return a_nf;
 }
 void Tauler::afageixCarta(Carta nova, int i, int j) {
+    int aux = j+1;
+    a_mida[i] = aux;
     a_mat[i][j] = nova;
 }
 Carta Tauler::getCarta(int i, int j) const {
     return a_mat[i][j];
+}
+Carta Tauler::getUltimaCartaVisible(int i) const {
+    for(int j = 0;j<=a_mida[i];j++){
+        if(j == a_mida[i]){
+            return a_mat[i][j-1];
+        }
+    }
+}
+Carta Tauler::extreuCarta(int i, int j) {
+    Carta v = a_mat[i][j];
+    a_mida[i]--;
+    a_mat[i][j] = Carta();
+    return v;
+}
+Carta Tauler::extreuDarrera(int i) {
+    Carta v = a_mat[i][a_mida[i]];
+    a_mida[i]--;
+    a_mat[i][a_mida[i]] = Carta();
+    return v;
+
+}
+void Tauler::afageixCartaFinal(Carta c, int i) {
+    a_mida[i]++;
+    for(int j=0;j<=a_mida[i];j++){
+        if(j == a_mida[i]){
+            a_mat[i][a_mida[i]-1] = c;
+        }
+    }
+}
+void Tauler::substitueix(Carta c, int desti) {
+    a_mat[desti][a_mida[desti]-1] = c;
 }

@@ -41,12 +41,15 @@ void Carta::mostrar() const {
 }
 bool Carta::casen(Carta anterior) const {
     bool casa;
-    if(esMesGran(anterior) and (pal < anterior.pal) and (valor< anterior.pal) and (color != anterior.color)){
+    if(esMesGran(anterior) and (color != anterior.color)){
         casa = true;
     }else{
         casa = false;
     }
     return casa;
+}
+bool Carta::getVisible() const {
+    return visible;
 }
 char Carta::getPal() const {
     return pal;
@@ -70,10 +73,13 @@ bool Carta::esMesGran(Carta c) const {
     if(c.valor == 'J'){
         return valor == 'D';
     }
-    if(c.valor == 'J'){
+    if(c.valor == 'D'){
         return valor == '9';
     }
-    diferencia = nou -anterior;
+    if(c.valor == '2'){
+        return valor == 'A';
+    }
+    diferencia = anterior -nou;
     return diferencia == 1;
 
 }
@@ -96,6 +102,9 @@ bool Carta::esMesPetita(Carta c) const {
     }
     if(c.valor == 'Q'){
         return valor == 'K';
+    }
+    if(c.valor == 'K'){
+        return valor == 'Q';
     }
     diferencia = nou -anterior;
     return diferencia == 1;
