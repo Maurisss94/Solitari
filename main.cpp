@@ -8,7 +8,7 @@ void llegirValors(int &llavor, int &passos){
 
     cout << "ENTRA LA LLAVOR:" << endl;
     cin >> llavor;
-    cout << "ENTRA ELS PASSOS: " << endl;
+    cout << "ENTRA ELS PASSOS:" << endl;
     cin >> passos;
 
 }
@@ -28,7 +28,7 @@ void mostrarMenu(int &opcio){
 }
 void seguentOpcio(int &opcio){
     cout << "JOC EN CURS\n"
-            "OPCIO: \n";
+            "OPCIO:\n";
     cin >> opcio;
 
 }
@@ -53,18 +53,29 @@ int demanaColumnaDesti(){
     cin >> colum;
     return colum;
 }
+int demanaColumnaOrigen(){
+    int colum;
+    cout << "ENTRA LA COLUMNA ORIGEN:" << endl;
+    cin >> colum;
+    return colum;
+}
 int demanaPila(){
     int pila;
-    cout << "ENTRA LA PILA: " << endl;
+    cout << "ENTRA LA PILA:" << endl;
     cin >> pila;
     return pila;
 }
 void gestionaOpcio(int opcio, Joc joc) {
-    while((opcio != 0) and !joc.haAcabat()){
+    bool fi = joc.haAcabat();
+    while((opcio != 0) and !fi){
         if (opcio == 1) {
             joc.obreCarta();
             joc.mostrar();
-            seguentOpcio(opcio);
+            fi = joc.haAcabat();
+            if(!fi){
+                seguentOpcio(opcio);
+            }
+
         }
         if(opcio == 2){
             if(joc.descartadesBuida()){
@@ -75,7 +86,10 @@ void gestionaOpcio(int opcio, Joc joc) {
                 int colum = demanaColumna();
                 joc.posarAlTauler(colum);
                 joc.mostrar();
-                seguentOpcio(opcio);
+                fi = joc.haAcabat();
+                if(!fi){
+                    seguentOpcio(opcio);
+                }
             }
         }
         if(opcio == 3){
@@ -86,7 +100,10 @@ void gestionaOpcio(int opcio, Joc joc) {
             }else{
                 joc.posarAlaPila();
                 joc.mostrar();
-                seguentOpcio(opcio);
+                fi = joc.haAcabat();
+                if(!fi){
+                    seguentOpcio(opcio);
+                }
             }
         }
         if(opcio == 4){
@@ -94,18 +111,29 @@ void gestionaOpcio(int opcio, Joc joc) {
             demanaOrigen(colum, fila);
             if(joc.comprovaSituacio(colum, fila)){
                 int desti = demanaColumnaDesti();
-                joc.mouCarta(colum, fila, desti);
+                if(desti < 1 or desti > 7){
+                    cout << "LA CARTA NO ES POT POSAR A LA COLUMNA " << desti << endl;
+                }else{
+                    joc.mouCarta(colum, fila, desti);
+                }
+
             }else{
                 cout << "LA CARTA NO ES POT MOURE" << endl;
             }
             joc.mostrar();
-            seguentOpcio(opcio);
+            fi = joc.haAcabat();
+            if(!fi){
+                seguentOpcio(opcio);
+            }
         }
         if(opcio == 5){
-            int desti = demanaColumnaDesti();
+            int desti = demanaColumnaOrigen();
             joc.mouCartaPila(desti);
             joc.mostrar();
-            seguentOpcio(opcio);
+            fi = joc.haAcabat();
+            if(!fi){
+                seguentOpcio(opcio);
+            }
 
         }
         if(opcio == 6){
@@ -117,13 +145,19 @@ void gestionaOpcio(int opcio, Joc joc) {
                 cout << "A LA PILA NO HI HA CAP CARTA PER RECUPERAR" << endl;
             }
             joc.mostrar();
-            seguentOpcio(opcio);
+            fi = joc.haAcabat();
+            if(!fi){
+                seguentOpcio(opcio);
+            }
         }
         if(opcio == 9){
             mostrarMenu(opcio);
         }
+
     }
+
     if(joc.haAcabat()){
+        cout << "JOC ACABAT" << endl;
         cout << "PARTIDA GUANYADA" << endl;
     }else{
         cout << "PARTIDA ABANDONADA" << endl;
@@ -140,5 +174,6 @@ int main() {
 
     mostrarMenu(opcio);
     gestionaOpcio(opcio, joc);
+
     return 0;
 }

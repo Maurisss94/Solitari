@@ -14,44 +14,48 @@ Tauler::Tauler(){
     inicialitza();
 
 }
-//Tauler::Tauler(const Tauler &elem) {
-  //  copia(elem);
-//}
-//void Tauler::allibera() {
-//    // alliberament de cadascuna de les files
-//    for(int i=0; i<a_nf; i++)
-//        delete [] a_mat[i];
+Tauler::Tauler(const Tauler &elem) {
+    copia(elem);
+}
+void Tauler::allibera() {
+    // alliberament de cadascuna de les files
+    for(int i=0; i<a_nf; i++)
+       delete [] a_mat[i];
 //
-//// alliberament del vector de punters
-//    delete [] a_mat;
-//    delete [] a_mida;
-//}
-void Tauler::reserva() {
-    a_mat = new Carta*[a_nf*a_nf];
-
+// alliberament del vector de punters
+    delete [] a_mat;
+    delete [] a_mida;
+    delete [] a_ncMax;
 }
-//Tauler::~Tauler() {
-//    allibera();
-//}
-//Tauler& Tauler::operator=(const Tauler &elem) {
-//    // Pre: --; Post: s’ha assignat sense aliasing la informació de t a l’objecte actual
-//    if(this!=&elem){
-//        allibera();
-//        copia(elem);
-//    }
-//    return *this;
-//}
+Tauler::~Tauler() {
+    allibera();
+}
+Tauler& Tauler::operator=(const Tauler &elem) {
+    // Pre: --; Post: s’ha assignat sense aliasing la informació de t a l’objecte actual
+    if(this!=&elem){
+        allibera();
+        copia(elem);
+    }
+    return *this;
+}
 void Tauler::copia(const Tauler &t) {
-    a_nf = t.a_nf; a_mida = t.a_mida; a_ncMax = t.a_ncMax;a_mat = t.a_mat; reserva();
+    a_nf = t.a_nf; inicialitza();
+    for(int i =0;i<a_nf;i++){
+        a_mat[i] = t.a_mat[i];
+        a_mida[i] = t.a_mida[i];
+        a_ncMax[i] = t.a_ncMax[i];
+    }
 }
+//Pre:--;
+//Post: Inicialitza el tauler de joc, amb el numero de columnes maxim, la mida de cada fila, el numero de files i el tauler on van les cartes col·locades.
 void Tauler::inicialitza() {
 
-    a_mat= new Carta*[7];
-    a_mida= new int[7];
-    a_ncMax = new int[13];
-    reserva();
+    a_mat= new Carta*[a_nf];
+    a_mida= new int[a_nf];
+    a_ncMax = new int[a_nf];
 
-    for(int i=0; i<7; i++){
+
+    for(int i=0; i<a_nf; i++){
         a_mat[i]= new Carta[13+i];
         a_mida[i]= i+1;
         a_ncMax[i] = 13 + i;

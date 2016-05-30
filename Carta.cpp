@@ -34,6 +34,8 @@ void Carta::mostrar() const {
         cout << valor << pal << " ";
     }else if((pal == ' ')or(valor==' ')){
         cout << "   ";
+    }else if(pal == '\0'){
+        cout << "   ";
     }else{
         cout << "**" << " ";
     }

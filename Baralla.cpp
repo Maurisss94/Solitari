@@ -12,8 +12,10 @@ using namespace std;
 unsigned Baralla::a_llavor = 1;
 
 Baralla::Baralla() {
-
+    a_n = 0;
 }
+//Pre: Passem per parametres dos numeros per fer els intercanvis, simular l'aleatori.
+//Post: Crea la baralla francesa, i intercanvia posicions segons els parametres entrats
 Baralla::Baralla(int llavor, int passos) {
 
     iniLlavor(llavor);

@@ -55,13 +55,11 @@ void pilaCartes::copia(const pilaCartes &o) {
         p = new Node; a_cim = p;
         aux = o.a_cim; p->valor = aux->valor; p->seg = o.a_cim;
         q = p;
-        p->valor.setAmagada();
         while (aux->seg!=NULL) {
             aux = aux->seg;
             p = new Node; q->seg = p;
             p->valor = aux->valor; p->seg = NULL;
             q = p;
-            p->valor.setAmagada();
         }
     }
 }

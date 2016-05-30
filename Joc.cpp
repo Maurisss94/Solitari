@@ -6,9 +6,11 @@
 #include <iostream>
 
 using namespace std;
+//Pre:Baralla a repartir no pot esser buida.
+//Post: Inici del joc, es crean totes les piles la ma i el tauler inicial, es reparteixen les cartes de manera que quedin com en el joc del solitari
+// i les cartes restants s'afageixen a la ma.
 Joc::Joc(Baralla b) {
     ma = pilaCartes();
-    tauler = Tauler();
     descartades = pilaCartes();
     coll1 = pilaCartes();
     coll2 = pilaCartes();
@@ -39,6 +41,9 @@ Joc::Joc(Baralla b) {
 
 
 }
+//Pre:--;
+//Post: Es mostra el joc, amb les piles de colls el tauler la ma i la pila de descartades, de manera que les columnes siguin estatiques, i que les
+// files hagin de decreixer o creixer segons el numero maxim de cartes d'una fila.
 void Joc::mostrar() const{
 
     cout << "ESTAT DEL JOC" << endl;
@@ -58,7 +63,6 @@ void Joc::mostrar() const{
         }
     }
     cout << endl;
-
     int files = 7, cont = 0, i=0;
     while(cont < gran){
         for(i;i<files;i++){
@@ -70,16 +74,25 @@ void Joc::mostrar() const{
         cont++;
     }
 }
+//Pre:--;
+//Post: Metode que si la ma es buida vol dir que ja hem mirat totes les cartes, es fa una copia de la pila de descartades cap a la ma.
+// en canvi si la ma no es buida llavors s'agafa una carta de la ma i es posa a la pila de descartades.
 void Joc::obreCarta() {
     if(ma.esBuida()){
-        ma = descartades;
-        descartades = pilaCartes();
+        reciclar();
     }else {
         Carta agafada = ma.desempila();
         agafada.setVisible();
         descartades.empila(agafada);
     }
 
+}
+void Joc::reciclar() {
+    while(!descartades.esBuida()){
+        Carta desempilada = descartades.desempila();
+        desempilada.setAmagada();
+        ma.empila(desempilada);
+    }
 }
 bool Joc::descartadesBuida() const {
     return descartades.esBuida();
@@ -98,9 +111,10 @@ void Joc::posarAlTauler(int colum) {
     }
 
 }
+//Pre:--;
+//Post: Metode que insereix a la pila de colls la carta agafada de la pila de descartades, comprova el seu pal i automaticament la insereix a la pila pertinent.
 void Joc::posarAlaPila() {
 
-    //REPASSAR , no pot ser que hi hagi tants ifs, fer una funcio amb el parametre de la carta.
     Carta agafada = descartades.cim();
 
     if(agafada.getPal() == 'c'){
@@ -151,6 +165,8 @@ void Joc::posarAlaPila() {
 void Joc::mostraError() {
     cout << "NO ES POT APILAR LA CARTA" << endl;
 }
+//Pre: Columna i fila entrades per l'usuari siguin les correctes.
+//Post: Retorna true si la columna o fila son valides i en el tauler l'ultima carta es visible.
 bool Joc::comprovaSituacio(int colum, int fila) const{
     if((colum < 1 or colum > 7) or (fila < 1 or fila > tauler.getColumna(colum-1)) or (!tauler.getCarta(colum-1, fila-1).getVisible())){
         return false;
@@ -180,8 +196,7 @@ void Joc::mouCarta(int colum, int fila, int desti) {
     }
 }
 void Joc::mouCartaPila(int desti) {
-    int aux = desti -1;
-    int cont = 0;
+    int aux = desti -1, cont = 0;
     if(!(aux < 0 or aux > 6) or tauler.getColumna(aux) != 0){
         Carta darrera = tauler.getUltimaCartaVisible(aux);
         if(primeraInsercio(darrera, aux, cont)){
@@ -216,10 +231,12 @@ void Joc::mouCartaPila(int desti) {
             }
 
         }
-        }
+        }else{
+        mostrarErrorPila();
+    }
 }
 bool Joc::primeraInsercio(Carta darrera, int desti, int &cont) {
-    int final = false;
+    bool final = false;
     if(darrera.getValor() == 'A' and coll1.esBuida() and darrera.getPal() == 'P'){
         coll1.empila(darrera);
         tauler.extreuDarrera(desti);
